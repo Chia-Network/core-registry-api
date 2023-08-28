@@ -1,0 +1,39 @@
+{
+  "name": "core-registry-api",
+  "version": "1.0.0",
+  "description": "Template repo for NodeJS-based projects",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": "index.js",
+  "devDependencies": {
+    "fs-extra": "^11.1.1",
+    "tar": "^6.1.15",
+    "yauzl": "^2.10.0",
+    "pkg": "^5.3.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "pm2": "^5.3.0"
+  },
+  "pkg": {
+    "assets": [
+      "apps/**/*",
+      "package.json",
+      "index.js"
+    ],
+    "outputPath": "dist"
+  },
+  "scripts": {
+    "build": "pkg .",
+    "prepare-binary": "rm -rf build && mkdir build",
+    "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node18-win-x64 --out-path build",
+    "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node18-macos-x64 --out-path build",
+    "create-linux-x64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-x64 --out-path build",
+    "create-linux-arm64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-arm64 --out-path build"
+  },
+  "keywords": [
+    "chia-blockchain"
+  ],
+  "author": "Michael Taylor",
+  "license": "ISC"
+}

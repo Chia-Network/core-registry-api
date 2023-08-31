@@ -1,7 +1,7 @@
 {
   "name": "core-registry-api",
   "version": "1.0.0",
-  "description": "Template repo for NodeJS-based projects",
+  "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
@@ -35,5 +35,5 @@
     "chia-blockchain"
   ],
   "author": "Michael Taylor",
-  "license": "ISC"
+  "license": "Apache-2.0"
 }

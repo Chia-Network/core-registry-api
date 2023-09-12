@@ -59,6 +59,7 @@ jobs:
         run: mkdir -p apps
 
       - name: Download executables and create apps.json file
+        shell: bash
         env:
           OS: ${{ matrix.os }}
           ARCH: ${{ matrix.arch }}

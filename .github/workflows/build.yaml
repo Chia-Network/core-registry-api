@@ -1,0 +1,239 @@
+name: Build Binaries
+
+on:
+  push:
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+env:
+  APP_NAME: core-registry-api
+
+jobs:
+  build:
+    name: Build Binaries
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        include:
+          - runs-on: ubuntu-latest
+            artifact-name: core-registry-api-linux-x64
+            build-command: npm run create-linux-x64-dist
+            os: linux
+            arch: x64
+          - runs-on: [Linux, ARM64]
+            artifact-name: core-registry-api-linux-arm64
+            build-command: npm run create-linux-arm64-dist
+            os: linux
+            arch: arm64
+          - runs-on: macos-latest
+            artifact-name: core-registry-api-macos-x64
+            build-command: npm run create-mac-x64-dist
+            os: macos
+            arch: x64
+          - runs-on: windows-2019
+            artifact-name: core-registry-api-windows-x64
+            build-command: npm run create-win-x64-dist
+            os: windows
+            arch: x64
+
+    steps:
+      - name: Clean workspace
+        uses: Chia-Network/actions/clean-workspace@main
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node 18.16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16'
+
+      - name: Create apps directory
+        run: mkdir -p apps
+
+      - name: Download executables and create apps.json file
+        env:
+          OS: ${{ matrix.os }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          # Start creating apps.json file
+          echo '{}' | jq . > tmp.json
+
+          # Create bash array
+          mapfile -t apps < <(jq -r '. | keys[]' < app-builds.json)
+
+          for APP in "${apps[@]}"; do
+            # Extract file info from json file
+            APPNAME=$(jq -r '."'"${APP}"'".name' < app-builds.json)
+            VERSION=$(jq -r '."'"${APP}"'".version' < app-builds.json)
+            REPO=$(jq -r '."'"${APP}"'".repo' < app-builds.json)
+            FORMAT=$(jq -r '."'"${APP}"'".filename_format' < app-builds.json)
+            FILENAME=$(eval echo "${FORMAT}")
+            URL="${REPO}releases/download/${VERSION}/${FILENAME}"
+
+            # Work in apps directory
+            pushd apps || exit
+            wget "${URL}"
+            unzip "${FILENAME}"
+            rm -v "${FILENAME}"
+            if (jq -r '."'"${APP}"'".folder' < ../app-builds.json)
+            then
+              echo "Moving out of subfolder"
+              FOLDER=$(jq -r '."'"${APP}"'".folder' < ../app-builds.json)
+              FOLDER=$(eval echo ${FOLDER})
+              echo "Folder name: ${FOLDER}"
+              mv -v "${FOLDER}"/* ./
+              rm -rvf "${FOLDER}"
+            fi
+            EXECUTABLE=$(ls "${APP}"*)
+            echo "Executable name: ${EXECUTABLE}"
+            jq '. + { "'${APPNAME}'": "'${EXECUTABLE}'" }' ../tmp.json > ../newtmp.json
+            mv ../newtmp.json ../tmp.json
+            popd || exit
+          done
+
+      - name: install global packages
+        run: npm i -g pkg @babel/cli @babel/preset-env
+
+      - name: npm install
+        run: |
+          node --version
+          npm install
+
+      - name: create distributions
+        run: ${{ matrix.build-command }}
+
+      - name: Make executable
+        run: chmod +x dist/$APP_NAME*
+
+      - name: Move /apps folder to /dist folder
+        run: mv -v apps dist/
+
+      # Windows Code Signing
+      - name: Sign windows artifacts
+        if: matrix.runs-on == 'windows-2019'
+        uses: chia-network/actions/digicert/windows-sign@main
+        with:
+          sm_api_key: ${{ secrets.SM_API_KEY }}
+          sm_client_cert_file_b64: ${{ secrets.SM_CLIENT_CERT_FILE_B64 }}
+          sm_client_cert_password: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+          sm_code_signing_cert_sha1_hash: ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}
+          file: ${{ github.workspace }}/dist/${{ env.APP_NAME }}.exe
+
+      # Mac .pkg build + sign
+      - name: Import Apple installer signing certificate
+        #if: steps.check_secrets.outputs.HAS_SECRET
+        if: matrix.runs-on == 'macos-latest'
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+          p12-file-base64: ${{ secrets.APPLE_DEV_ID_INSTALLER }}
+          p12-password: ${{ secrets.APPLE_DEV_ID_INSTALLER_PASS }}
+
+      - name: Import Apple Application signing certificate
+        #if: steps.check_secrets.outputs.HAS_SECRET
+        if: matrix.runs-on == 'macos-latest'
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          create-keychain: false # Created when importing the first cert
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+          p12-file-base64: ${{ secrets.APPLE_DEV_ID_APP }}
+          p12-password: ${{ secrets.APPLE_DEV_ID_APP_PASS }}
+
+      - name: Build Mac .pkg
+        if: matrix.runs-on == 'macos-latest'
+        run: |
+          rm -rf ${{ github.workspace }}/build-scripts/macos/darwin/application || true
+          cp -r ${{ github.workspace }}/dist ${{ github.workspace }}/build-scripts/macos/application
+
+          echo "Signing the binaries"
+          codesign -f -s "Developer ID Application: Chia Network Inc." --timestamp --options=runtime --entitlements ${{ github.workspace }}/build-scripts/macos/entitlements.mac.plist ${{ github.workspace }}/build-scripts/macos/application/$APP_NAME
+
+          # Makes the .pkg in ./build-scripts/macos/target/pkg
+          echo "Building the .pkg"
+          bash ${{ github.workspace }}/build-scripts/macos/build-macos.sh ${APP_NAME}
+
+          mkdir -p ${{ github.workspace }}/build-scripts/macos/target/pkg-signed
+
+          echo "Signing the .pkg"
+          productsign --sign "Developer ID Installer: Chia Network Inc." ${{ github.workspace }}/build-scripts/macos/target/pkg/${APP_NAME}-macos-installer-x64.pkg ${{ github.workspace }}/build-scripts/macos/target/pkg-signed/${APP_NAME}-macos-installer-x64.pkg
+
+          echo "Notarizing the .pkg"
+          npm install -g notarize-cli
+          notarize-cli \
+            --file=${{ github.workspace }}/build-scripts/macos/target/pkg-signed/${APP_NAME}-macos-installer-x64.pkg \
+            --bundle-id net.chia.${APP_NAME} \
+            --username "${{ secrets.APPLE_NOTARIZE_USERNAME }}" \
+            --password "${{ secrets.APPLE_NOTARIZE_PASSWORD }}"
+
+      - name: Upload Mac Installer
+        if: matrix.runs-on == 'macos-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-mac-installer
+          path: ${{ github.workspace }}/build-scripts/macos/target/pkg-signed
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ github.workspace }}/dist
+
+
+  debs:
+    name: Build ${{ matrix.name }} deb
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    strategy:
+      matrix:
+        include:
+          - name: core-registry-api-linux-x64
+            platform: amd64
+          - name: core-registry-api-linux-arm64
+            platform: arm64
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ matrix.name }}
+
+      - name: Get tag name
+        id: tag-name
+        run: |
+          echo "TAGNAME=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+      - name: Build .deb
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          pip install j2cli
+          CLI_DEB_BASE="${APP_NAME}_${{ steps.tag-name.outputs.TAGNAME }}-1_${PLATFORM}"
+          mkdir -p "deb/$CLI_DEB_BASE/opt/${APP_NAME}"
+          mkdir -p "deb/$CLI_DEB_BASE/usr/bin"
+          mkdir -p "deb/$CLI_DEB_BASE/etc/systemd/system"
+          mkdir -p "deb/$CLI_DEB_BASE/DEBIAN"
+          j2 -o "deb/$CLI_DEB_BASE/DEBIAN/control" build-scripts/deb/control.j2
+          cp -r ${{ matrix.name }}/* "deb/$CLI_DEB_BASE/opt/${APP_NAME}/"
+          cp build-scripts/deb/${APP_NAME}@.service deb/$CLI_DEB_BASE/etc/systemd/system/${APP_NAME}@.service
+          chmod +x deb/$CLI_DEB_BASE/opt/${APP_NAME}/${APP_NAME}
+          ln -s ../../opt/${APP_NAME/${APP_NAME} "deb/$CLI_DEB_BASE/usr/bin/${APP_NAME}"
+          dpkg-deb --build --root-owner-group "deb/$CLI_DEB_BASE"
+
+      - name: Upload deb
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.name }}-deb
+          path: ${{ github.workspace }}/deb/*.deb
+

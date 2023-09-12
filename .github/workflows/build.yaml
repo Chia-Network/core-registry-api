@@ -83,10 +83,11 @@ jobs:
             wget --no-verbose "${URL}"
             unzip "${FILENAME}"
             rm -v "${FILENAME}"
-            if (jq -r '."'"${APP}"'".folder' < ../app-builds.json)
+            FOLDER=$(jq -r '."'"${APP}"'".folder' < ../app-builds.json)
+            echo "Unprocessed folder name: ${FOLDER}"
+            if [ "${FOLDER}" != "null" ]
             then
               echo "Moving out of subfolder"
-              FOLDER=$(jq -r '."'"${APP}"'".folder' < ../app-builds.json)
               FOLDER=$(eval echo ${FOLDER})
               echo "Folder name: ${FOLDER}"
               mv -v "${FOLDER}"/* ./

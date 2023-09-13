@@ -61,7 +61,7 @@ jobs:
       # Install wget on Windows
       - name: Install wget on Windows
         if: matrix.runs-on == 'windows-2019'
-        run: choco install wget -y
+        run: choco install wget -y --no-progress
 
       - name: Download executables and create apps.json file
         shell: bash
@@ -72,6 +72,9 @@ jobs:
           # Start creating apps.json file
           echo "Creating temporary json file"
           echo '{}' | jq . > tmp.json
+
+          echo "Here's the first jq function"
+          jq -r '. | keys[]' < app-builds.json
 
           # Create bash array
           apps=()

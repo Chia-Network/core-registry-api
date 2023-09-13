@@ -69,6 +69,7 @@ jobs:
           OS: ${{ matrix.os }}
           ARCH: ${{ matrix.arch }}
         run: |
+          set -x
           # Start creating apps.json file
           echo "Creating temporary json file"
           echo '{}' | jq . > tmp.json

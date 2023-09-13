@@ -32,11 +32,11 @@ jobs:
             build-command: npm run create-linux-arm64-dist
             os: linux
             arch: arm64
-          - runs-on: macos-latest
-            artifact-name: core-registry-api-macos-x64
-            build-command: npm run create-mac-x64-dist
-            os: macos
-            arch: x64
+          # - runs-on: macos-latest
+          #   artifact-name: core-registry-api-macos-x64
+          #   build-command: npm run create-mac-x64-dist
+          #   os: macos
+          #   arch: x64
           - runs-on: windows-2019
             artifact-name: core-registry-api-windows-x64
             build-command: npm run create-win-x64-dist

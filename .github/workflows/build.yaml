@@ -73,7 +73,7 @@ jobs:
           echo '{}' | jq . > tmp.json
 
           # Create bash array
-          mapfile -t apps < <(jq -r '. | keys[]' < app-builds.json)
+          readarray -t apps < <(jq -r '. | keys[]' < app-builds.json)
 
           for APP in "${apps[@]}"; do
             # Extract file info from json file

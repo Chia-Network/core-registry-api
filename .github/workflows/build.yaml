@@ -80,6 +80,7 @@ jobs:
           # Create bash array
           apps=()
           while IFS= read -r line; do
+            line="${line/$'\r'/}"
             echo "Adding $line to array"
             apps+=( "$line" )
           done < <(jq -r '. | keys[]' < app-builds.json)

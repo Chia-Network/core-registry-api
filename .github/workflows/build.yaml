@@ -88,7 +88,7 @@ jobs:
           for APP in "${apps[@]}"; do
             echo "Running loop for ${APP}"
             # Extract file info from json file
-            APPNAME=$(jq -r '.["${APP}"].name' < app-builds.json)
+            APPNAME=$(jq -r --arg jsonKey ${APP} '.[$jsonKey].name' < app-builds.json)
             #APPNAME=$(jq -r '."'"${APP}"'".name' < app-builds.json)
             echo "APPNAME is ${APPNAME}"
             VERSION=$(jq -r '."'"${APP}"'".version' < app-builds.json)

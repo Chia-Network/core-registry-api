@@ -58,6 +58,11 @@ jobs:
       - name: Create apps directory
         run: mkdir -p apps
 
+      # Install wget on Windows
+      - name: Install wget on Windows
+        if: matrix.runs-on == 'windows-2019'
+        run: choco install wget -y
+
       - name: Download executables and create apps.json file
         shell: bash
         env:

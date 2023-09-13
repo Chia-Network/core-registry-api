@@ -264,3 +264,86 @@ jobs:
           name: ${{ matrix.name }}-deb
           path: ${{ github.workspace }}/deb/*.deb
 
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - debs
+      - build
+    steps:
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-windows-x64
+          path: ${{ env.APP_NAME }}-windows-x64
+
+      - name: Download MacOS installer artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-mac-installer
+          path: ${{ env.APP_NAME }}-mac-installer
+
+      - name: Download MacOS executable artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-macos-x64
+          path: ${{ env.APP_NAME }}-macos-x64
+
+      - name: Download Linux x64 artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-linux-x64
+          path: ${{ env.APP_NAME }}-linux-x64
+
+      - name: Download Linux ARM 64 artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-linux-arm64
+          path: ${{ env.APP_NAME }}-linux-arm64
+
+      - name: Download Linux x64 deb
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-linux-x64-deb
+          path: ${{ env.APP_NAME }}-linux-x64-deb
+
+      - name: Download Linux arm64 deb
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-linux-arm64-deb
+          path: ${{ env.APP_NAME }}-linux-arm64-deb
+
+      - name: Get tag name
+        id: tag-name
+        run: |
+          echo "TAGNAME=$(echo $GITHUB_REF | cut -d / -f 3)" >>$GITHUB_OUTPUT
+
+      - name: Create zips
+        run: |
+          zip -r ${APP_NAME }-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-windows-x64
+          zip -r ${APP_NAME}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-mac-installer
+          zip -r ${APP_NAME}-linux-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-x64
+          zip -r ${APP_NAME}-linux-arm64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-arm64
+          zip -r ${APP_NAME}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-macos-x64
+
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          files: |
+            ${{ env.APP_NAME }}-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            ${{ env.APP_NAME }}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            ${{ env.APP_NAME }}-linux-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            ${{ env.APP_NAME }}-linux-arm64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            ${{ env.APP_NAME }}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            ${{ env.APP_NAME }}-linux-x64-deb/*.deb
+            ${{ env.APP_NAME }}-linux-arm64-deb/*.deb
+
+      - name: Get repo name
+        id: repo-name
+        run: |
+          echo "REPO_NAME=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 2)" >>$GITHUB_OUTPUT
+
+      - name: Trigger apt repo update
+        run: |
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"climate_tokenization_repo":"${{ steps.repo-name.outputs.REPO_NAME }}","application_name":"${APP_NAME}","release_version":"${{ steps.tag-name.outputs.TAGNAME }}","add_debian_version":"true","arm64":"available"}' ${{ secrets.GLUE_API_URL }}/api/v1/climate-tokenization/${{ github.sha }}/start
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"climate_tokenization_repo":"${{ steps.repo-name.outputs.REPO_NAME }}","application_name":"${APP_NAME}","release_version":"${{ steps.tag-name.outputs.TAGNAME }}","add_debian_version":"true","arm64":"available"}' ${{ secrets.GLUE_API_URL }}/api/v1/climate-tokenization/${{ github.sha }}/success/deploy

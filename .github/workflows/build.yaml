@@ -254,7 +254,7 @@ jobs:
           mkdir -p "deb/$CLI_DEB_BASE/DEBIAN"
           j2 -o "deb/$CLI_DEB_BASE/DEBIAN/control" build-scripts/deb/control.j2
           cp -r ${{ matrix.name }}/* "deb/$CLI_DEB_BASE/opt/${APP_NAME}/"
-          cp build-scripts/deb/$systemd@.service deb/$CLI_DEB_BASE/etc/systemd/system/${APP_NAME}@.service
+          cp build-scripts/deb/systemd@.service deb/$CLI_DEB_BASE/etc/systemd/system/${APP_NAME}@.service
           chmod +x deb/$CLI_DEB_BASE/opt/${APP_NAME}/${APP_NAME}
           ln -s ../../opt/${APP_NAME/${APP_NAME} "deb/$CLI_DEB_BASE/usr/bin/${APP_NAME}"
           dpkg-deb --build --root-owner-group "deb/$CLI_DEB_BASE"

@@ -245,6 +245,7 @@ jobs:
           DESCRIPTION: "Core Registry API"
           HOMEPAGE: "https://github.com/Chia-Network/core-registry-api/"
         run: |
+          set -x
           pip install j2cli
           CLI_DEB_BASE="${APP_NAME}_${{ steps.tag-name.outputs.TAGNAME }}-1_${PLATFORM}"
           mkdir -p "deb/$CLI_DEB_BASE/opt/${APP_NAME}"

@@ -73,7 +73,10 @@ jobs:
           echo '{}' | jq . > tmp.json
 
           # Create bash array
-          readarray -t apps < <(jq -r '. | keys[]' < app-builds.json)
+          apps=()
+          while IFS= read -r line; do
+            apps+=( "$line" )
+          done < <(jq -r '. | keys[]' < app-builds.json)
 
           for APP in "${apps[@]}"; do
             # Extract file info from json file

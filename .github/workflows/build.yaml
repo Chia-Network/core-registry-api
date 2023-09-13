@@ -79,9 +79,11 @@ jobs:
           # Create bash array
           apps=()
           while IFS= read -r line; do
+            echo "Adding $line to array"
             apps+=( "$line" )
           done < <(jq -r '. | keys[]' < app-builds.json)
           echo "apps array created"
+          printf “’%s’\n” “${apps[@]}”
 
           for APP in "${apps[@]}"; do
             # Extract file info from json file

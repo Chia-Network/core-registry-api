@@ -70,6 +70,7 @@ jobs:
           ARCH: ${{ matrix.arch }}
         run: |
           # Start creating apps.json file
+          echo "Creating temporary json file"
           echo '{}' | jq . > tmp.json
 
           # Create bash array
@@ -77,15 +78,20 @@ jobs:
           while IFS= read -r line; do
             apps+=( "$line" )
           done < <(jq -r '. | keys[]' < app-builds.json)
+          echo "apps array created"
 
           for APP in "${apps[@]}"; do
             # Extract file info from json file
             APPNAME=$(jq -r '."'"${APP}"'".name' < app-builds.json)
+            echo "APPNAME is ${APPNAME}"
             VERSION=$(jq -r '."'"${APP}"'".version' < app-builds.json)
+            echo "VERSION is ${VERSION}"
             REPO=$(jq -r '."'"${APP}"'".repo' < app-builds.json)
+            echo "REPO is ${APPNAME}"
             FORMAT=$(jq -r '."'"${APP}"'".filename_format' < app-builds.json)
             FILENAME=$(eval echo "${FORMAT}")
             URL="${REPO}releases/download/${VERSION}/${FILENAME}"
+            echo "URL is ${URL}"
 
             # Work in apps directory
             pushd apps || exit

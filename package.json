@@ -17,7 +17,6 @@
   },
   "pkg": {
     "assets": [
-      "apps/**/*",
       "package.json",
       "index.js"
     ],

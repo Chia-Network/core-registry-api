@@ -128,7 +128,7 @@ jobs:
           jq < apps.json
 
       - name: install global packages
-        run: npm i -g pkg @babel/cli @babel/preset-env
+        run: npm i -g pkg
 
       - name: npm install
         run: |

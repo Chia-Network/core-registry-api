@@ -139,7 +139,9 @@ jobs:
         run: ${{ matrix.build-command }}
 
       - name: Make executable
-        run: chmod +x dist/$APP_NAME*
+        run:
+          set -x
+          chmod -v +x dist/${APP_NAME}*
 
       - name: Move /apps folder to /dist folder
         run: mv -v apps dist/

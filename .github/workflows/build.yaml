@@ -139,7 +139,7 @@ jobs:
         run: ${{ matrix.build-command }}
 
       - name: Make executable
-        run:
+        run: |
           set -x
           chmod -v +x dist/${APP_NAME}*
 

@@ -284,17 +284,17 @@ jobs:
           name: ${{ env.APP_NAME }}-windows-x64
           path: ${{ env.APP_NAME }}-windows-x64
 
-      - name: Download MacOS installer artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.APP_NAME }}-mac-installer
-          path: ${{ env.APP_NAME }}-mac-installer
+      # - name: Download MacOS installer artifacts
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: ${{ env.APP_NAME }}-mac-installer
+      #     path: ${{ env.APP_NAME }}-mac-installer
 
-      - name: Download MacOS executable artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.APP_NAME }}-macos-x64
-          path: ${{ env.APP_NAME }}-macos-x64
+      # - name: Download MacOS executable artifacts
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: ${{ env.APP_NAME }}-macos-x64
+      #     path: ${{ env.APP_NAME }}-macos-x64
 
       - name: Download Linux x64 artifacts
         uses: actions/download-artifact@v3
@@ -328,20 +328,20 @@ jobs:
       - name: Create zips
         run: |
           zip -r ${APP_NAME }-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-windows-x64
-          zip -r ${APP_NAME}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-mac-installer
+          # zip -r ${APP_NAME}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-mac-installer
           zip -r ${APP_NAME}-linux-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-x64
           zip -r ${APP_NAME}-linux-arm64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-arm64
-          zip -r ${APP_NAME}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-macos-x64
+          # zip -r ${APP_NAME}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-macos-x64
 
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
             ${{ env.APP_NAME }}-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
-            ${{ env.APP_NAME }}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            # ${{ env.APP_NAME }}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
             ${{ env.APP_NAME }}-linux-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
             ${{ env.APP_NAME }}-linux-arm64-${{ steps.tag-name.outputs.TAGNAME }}.zip
-            ${{ env.APP_NAME }}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
+            # ${{ env.APP_NAME }}-macos-binary-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip
             ${{ env.APP_NAME }}-linux-x64-deb/*.deb
             ${{ env.APP_NAME }}-linux-arm64-deb/*.deb
 

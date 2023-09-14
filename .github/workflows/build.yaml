@@ -256,7 +256,7 @@ jobs:
           cp -r ${{ matrix.name }}/* "deb/$CLI_DEB_BASE/opt/${APP_NAME}/"
           cp build-scripts/deb/systemd@.service deb/$CLI_DEB_BASE/etc/systemd/system/${APP_NAME}@.service
           chmod +x deb/$CLI_DEB_BASE/opt/${APP_NAME}/${APP_NAME}
-          ln -s ../../opt/${APP_NAME/${APP_NAME} "deb/$CLI_DEB_BASE/usr/bin/${APP_NAME}"
+          ln -s ../../opt/${APP_NAME}/${APP_NAME} "deb/$CLI_DEB_BASE/usr/bin/${APP_NAME}"
           dpkg-deb --build --root-owner-group "deb/$CLI_DEB_BASE"
 
       - name: Upload deb

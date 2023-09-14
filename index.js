@@ -1,72 +1,74 @@
-const pm2 = require("pm2");
+const { spawn } = require("child_process");
 const apps = require("./apps.json");
+const processList = [];
 
-pm2.connect((err) => {
-  if (err) {
-    console.error(err);
-    process.exit(2);
+const startChildProcess = async (executable, name) => {
+  return new Promise((resolve, reject) => {
+    const childProcess = spawn(executable, [], {
+      detached: true,
+      stdio: ["ignore", "pipe", "pipe"], // Capture stdout and stderr
+    });
+
+    childProcess.stdout.on("data", (data) => {
+      // Display stdout of child process in the main process
+      console.log(`[${name}] ${data.toString().trim()}`);
+    });
+
+    childProcess.stderr.on("data", (data) => {
+      // Handle stderr if needed
+      console.error(`[${name}] Error: ${data.toString().trim()}`);
+    });
+
+    childProcess.on("error", (err) => {
+      console.error(`Error starting ${name}:`, err);
+      reject(err);
+    });
+
+    childProcess.on("exit", (code, signal) => {
+      console.log(`${name} exited with code ${code} and signal ${signal}`);
+      resolve();
+    });
+
+    childProcess.unref(); // Unreference the child process to allow the main process to exit independently
+
+    processList.push(childProcess); // Store child process in the list
+  });
+};
+
+const startChildProcesses = async () => {
+  for (const name of Object.keys(apps)) {
+    const executable = `apps/${apps[name]}`;
+    try {
+      startChildProcess(executable, name);
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // Wait 3 second before starting the next process
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+};
+
+process.on("SIGINT", () => {
+  console.log("Received SIGINT signal. Terminating child processes...");
+
+  // Terminate child processes
+  for (const childProcess of processList) {
+    childProcess.kill("SIGINT"); // Send SIGINT to child process
   }
 
-  pm2.launchBus((err, bus) => {
-    bus.on("log:out", (packet) => {
-      let label;
-      switch (packet.process.name) {
-        case "CADT":
-          label = packet.process.name;
-          break;
-        case "Climate Tokenization Engine":
-          label = packet.process.name;
-          break;
-        case "Climate Token Driver":
-          label = packet.process.name;
-          break;
-        case "Climate Explorer":
-          label = packet.process.name;
-          break;
-        default:
-          label = packet.process.name;
-          break;
-      }
-      console.log(label + " " + packet.data.trim());
-    });
-
-    bus.on("log:err", (packet) => {
-      console.error(packet.data);
-    });
-
-    const processConfig = (script, name) => ({
-      script,
-      name,
-      interpreter: "none",
-      autorestart: false,
-    });
-
-    pm2.start(processConfig(`apps/${apps.cadt}`, "CADT"), (err) => {
-      if (err) console.error(err);
-    });
-
-    pm2.start(
-      processConfig(`apps/${apps.climate_token_engine}`, "Climate Tokenization Engine"),
-      (err) => {
-        if (err) console.error(err);
-      }
-    );
-
-    pm2.start(
-      processConfig(
-        `apps/${apps.climate_token_driver}`,
-        "Climate Token Driver"
-      ),
-      (err) => {
-        if (err) console.error(err);
-      }
-    );
-
-    pm2.start(
-      processConfig(`apps/${apps.climate_explorer}`, "Climate Explorer"),
-      (err) => {
-        if (err) console.error(err);
-      }
-    );
-  });
+  // Give some time for child processes to exit gracefully
+  setTimeout(() => {
+    process.exit(0); // Exit the main process
+  }, 5000); // Adjust the delay as needed
 });
+
+// Listen for the exit event of the main process
+process.on("exit", () => {
+  console.log("Exiting...");
+
+  // Terminate all child processes
+  for (const childProcess of processList) {
+    childProcess.kill();
+  }
+});
+
+startChildProcesses();

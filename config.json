@@ -1,4 +1,5 @@
 {
-  "cadt": "cadt.exe",
-  "climate_explorer": "climate-explorer-chia_1.0.21_amd64.exe"
+  "cadt": "1.2.7",
+  "climate_explorer": "1.0.1",
+  "climate_token_driver": "1.0.0"
 }

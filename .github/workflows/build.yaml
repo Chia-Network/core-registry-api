@@ -327,7 +327,7 @@ jobs:
 
       - name: Create zips
         run: |
-          zip -r ${APP_NAME }-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-windows-x64
+          zip -r ${APP_NAME}-windows-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-windows-x64
           # zip -r ${APP_NAME}-macos-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-mac-installer
           zip -r ${APP_NAME}-linux-x64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-x64
           zip -r ${APP_NAME}-linux-arm64-${{ steps.tag-name.outputs.TAGNAME }}.zip ${APP_NAME}-linux-arm64

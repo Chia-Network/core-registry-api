@@ -123,6 +123,10 @@ jobs:
             popd || exit
           done
 
+          mv -v tmp.json apps.json
+
+          jq < apps.json
+
       - name: install global packages
         run: npm i -g pkg @babel/cli @babel/preset-env
 

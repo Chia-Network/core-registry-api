@@ -1,6 +1,6 @@
 {
   "name": "core-registry-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Template repo for NodeJS-based projects",
   "main": "index.js",
   "type": "commonjs",

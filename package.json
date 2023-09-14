@@ -1,7 +1,7 @@
 {
   "name": "core-registry-api",
   "version": "1.0.1",
-  "description": "Template repo for NodeJS-based projects",
+  "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
@@ -21,15 +21,15 @@
   },
   "scripts": {
     "build": "pkg .",
-    "prepare-binary": "rm -rf build && mkdir build",
-    "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node18-win-x64 --out-path build && cp -r apps build",
-    "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node18-macos-x64 --out-path build && cp -r apps build",
-    "create-linux-x64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-x64 --out-path build && cp -r apps build",
-    "create-linux-arm64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-arm64 --out-path build && cp -r apps build"
+    "prepare-binary": "rm -rf dist && mkdir dist",
+    "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node18-win-x64 --out-path dist",
+    "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node18-macos-x64 --out-path dist",
+    "create-linux-x64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-x64 --out-path dist",
+    "create-linux-arm64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-arm64 --out-path dist"
   },
   "keywords": [
     "chia-blockchain"
   ],
   "author": "Michael Taylor",
-  "license": "ISC"
+  "license": "Apache-2.0"
 }

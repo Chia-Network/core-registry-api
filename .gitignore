@@ -102,5 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Custom
 apps
 build
+tmp.json
+newtmp.json

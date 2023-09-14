@@ -1,0 +1,34 @@
+#
+# Core Registry API init file for systemd. To
+# start the Core Registry API service
+# using systemd, execute `systemctl start
+# core-registry-api@<USERNAME>`
+# where <USERNAME> is the Linux user you wish to run
+# the Core Registry API as. Normally you'll
+# run Core Registry API on the same system
+# as the Chia Wallet and Data Layer and you need to run
+# Core Registry API as the same user as Chia.
+#
+# For example, if running Chia as the ubuntu user
+# with your $CHIA_ROOT directory at /home/ubuntu/.chia,
+# then start Core Registry API with the command
+#
+# `systemctl start core-registry-api@ubuntu`
+#
+
+[Unit]
+Description=Core Registry API
+
+[Service]
+# Set Chia directory as an environment variable
+Environment=CHIA_ROOT=/home/%i/.chia/mainnet
+
+# CADT executable
+ExecStart=/opt/core-registry-api/core-registry-api
+
+# Start the software with `systemctl start core-registry-api@username`
+User=%i
+Group=%i
+
+[Install]
+WantedBy=multi-user.target

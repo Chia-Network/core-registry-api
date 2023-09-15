@@ -23,8 +23,9 @@ Description=Core Registry API
 # Set Chia directory as an environment variable
 Environment=CHIA_ROOT=/home/%i/.chia/mainnet
 
-# CADT executable
+# Core Registry executable
 ExecStart=/opt/core-registry-api/core-registry-api
+WorkingDirectory=/opt/core-registry-api/
 
 # Start the software with `systemctl start core-registry-api@username`
 User=%i

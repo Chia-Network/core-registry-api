@@ -1,6 +1,6 @@
 {
   "name": "core-registry-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",

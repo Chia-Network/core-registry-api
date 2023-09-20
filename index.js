@@ -36,11 +36,52 @@ const startChildProcess = async (executable, name) => {
 };
 
 const startChildProcesses = async () => {
+  // Process "cadt" first
+  if (apps.hasOwnProperty("cadt")) {
+    try {
+      startChildProcess(`apps/${apps["cadt"]}`, "cadt");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  // Process "climate_explorer" second
+  if (apps.hasOwnProperty("climate_explorer")) {
+    try {
+      startChildProcess(`apps/${apps["climate_explorer"]}`, "climate_explorer");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  if (apps.hasOwnProperty("climate_token_driver")) {
+    try {
+      startChildProcess(
+        `apps/${apps["climate_token_driver"]}`,
+        "climate_token_driver"
+      );
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  // Process the remaining keys
   for (const name of Object.keys(apps)) {
+    if (
+      name === "cadt" ||
+      name === "climate_explorer" ||
+      name === "climate_token_driver"
+    ) {
+      continue; // Skip if already processed
+    }
+
     const executable = `apps/${apps[name]}`;
     try {
       startChildProcess(executable, name);
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Wait 3 second before starting the next process
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     } catch (error) {
       console.error(error.message);
     }

@@ -1,3 +1,7 @@
+## [1.0.11](https://github.com/Chia-Network/core-registry-api/compare/1.0.10...1.0.11) (2023-09-20)
+
+
+
 ## [1.0.10](https://github.com/Chia-Network/core-registry-api/compare/1.0.9...1.0.10) (2023-09-20)
 
 

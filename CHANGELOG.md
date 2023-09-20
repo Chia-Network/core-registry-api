@@ -1,3 +1,12 @@
+## [1.0.9](https://github.com/Chia-Network/core-registry-api/compare/1.0.8...1.0.9) (2023-09-20)
+
+
+### Features
+
+* ensure priority startup ([cd2a774](https://github.com/Chia-Network/core-registry-api/commit/cd2a774f4dea06576cf4c6b6e033ddb9a48690d8))
+
+
+
 ## [1.0.8](https://github.com/Chia-Network/core-registry-api/compare/1.0.7...1.0.8) (2023-09-19)
 
 

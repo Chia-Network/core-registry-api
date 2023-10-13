@@ -47,6 +47,7 @@ jobs:
             testedVersion=$(jq -r .chiaVersion package.json)
             rm -f testedChiaVersion.svg
             npx badge-maker "Tested to Chia Version" "${testedVersion}" :green > testedChiaVersion.svg
+            git add testedChiaVersion.svg
             git commit -m "chore: Updating changelog and badge for $version"
             git tag $version -m "Release $version  $changes"
             git push origin $version

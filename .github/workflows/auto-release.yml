@@ -1,6 +1,6 @@
 # Compares the version in package.json to tags on the repo. If the tag doesn't exist, a new tag is created, which
 # then triggers the normal "on tag" release automation in the build job
-name: Auto Tag
+name: Create Changelog and Tag
 
 on:
   push:
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   check-version:
-    name: Check version increment
+    name: Create Changelog, Tag, and Badge
     runs-on: ubuntu-latest
     steps:
       - name: Clean workspace
@@ -44,7 +44,10 @@ jobs:
             npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0
             changes=$(npx conventional-changelog-cli -r 1 | tail -n +2)
             git add CHANGELOG.md
-            git commit -m "chore: Updating changelog for $version"
+            testedVersion=$(jq -r .chiaVersion package.json)
+            rm -f testedChiaVersion.svg
+            npx badge-maker "Tested to Chia Version" "${testedVersion}" :green > testedChiaVersion.svg
+            git commit -m "chore: Updating changelog and badge for $version"
             git tag $version -m "Release $version  $changes"
             git push origin $version
             git push origin main

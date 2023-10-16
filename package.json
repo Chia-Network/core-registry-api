@@ -1,10 +1,11 @@
 {
   "name": "core-registry-api",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
+  "chiaVersion": "2.0.1",
   "devDependencies": {
     "fs-extra": "^11.1.1",
     "tar": "^6.1.15",

@@ -1,6 +1,6 @@
 # Core Registry API
 
-![Tested Up to Chia Version](https://raw.githubusercontent.com/Chia-Network/core-registry-api/main/src/testedChiaVersion.svg)
+![Tested Up to Chia Version](https://raw.githubusercontent.com/Chia-Network/core-registry-api/main/testedChiaVersion.svg)
 
 ​This project provides a unified interface for the [Chia Blockchain](https://github.com/Chia-Network/chia-blockchain) carbon Core Registry applications.  These applications include:
 

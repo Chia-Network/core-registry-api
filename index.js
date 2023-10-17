@@ -26,6 +26,12 @@ const startChildProcess = async (executable, name) => {
 
     childProcess.on("exit", (code, signal) => {
       console.log(`${name} exited with code ${code} and signal ${signal}`);
+
+      if (code !== 0) {
+        // Restart the process because it stopped unexpectedly
+        startChildProcess(executable, name);
+      }
+
       resolve();
     });
 

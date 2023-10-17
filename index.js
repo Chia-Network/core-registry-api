@@ -29,6 +29,7 @@ const startChildProcess = async (executable, name) => {
 
       if (code !== 0) {
         // Restart the process because it stopped unexpectedly
+        console.log(`UNEXPECTED EXIT: Restarting ${name}...`);
         startChildProcess(executable, name);
       }
 

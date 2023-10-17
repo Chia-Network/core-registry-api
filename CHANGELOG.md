@@ -1,3 +1,12 @@
+## [1.0.18](https://github.com/Chia-Network/core-registry-api/compare/1.0.17...1.0.18) (2023-10-17)
+
+
+### Features
+
+* restart process if it crashed ([3c8c639](https://github.com/Chia-Network/core-registry-api/commit/3c8c63938e3d65ab1f00ba9580e5fd866bbb17c6))
+
+
+
 ## [1.0.17](https://github.com/Chia-Network/core-registry-api/compare/1.0.16...1.0.17) (2023-10-17)
 
 

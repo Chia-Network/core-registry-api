@@ -16,7 +16,12 @@ const startChildProcess = async (executable, name) => {
 
     childProcess.stderr.on("data", (data) => {
       // Handle stderr if needed
-      console.error(`[${name}] Error: ${data.toString().trim()}`);
+      if (
+        // this warning doesnt mean anything to us and we want to hide it
+        data.toString().trim().includes("(sequalize) Warning: Model attributes")
+      ) {
+        console.error(`[${name}] Error: ${data.toString().trim()}`);
+      }
     });
 
     childProcess.on("error", (err) => {

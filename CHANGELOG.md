@@ -1,3 +1,12 @@
+## [1.0.19](https://github.com/Chia-Network/core-registry-api/compare/1.0.18...1.0.19) (2023-10-18)
+
+
+### Bug Fixes
+
+* dont log out useless sequalize msg ([003884f](https://github.com/Chia-Network/core-registry-api/commit/003884f6355b2f701a600f5c86fe02b0e0739d6b))
+
+
+
 ## [1.0.18](https://github.com/Chia-Network/core-registry-api/compare/1.0.17...1.0.18) (2023-10-17)
 
 

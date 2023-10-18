@@ -16,7 +16,7 @@
   },
   "climate-tokenization-engine": {
     "name": "climate_token_engine",
-    "version": "1.3.12",
+    "version": "1.3.13",
     "repo": "https://github.com/Chia-Network/Climate-Tokenization-Engine/",
     "filename_format": "${APP}-${OS}-${ARCH}-${VERSION}.zip",
     "executable_format": "${APP}",

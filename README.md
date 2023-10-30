@@ -49,7 +49,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/chia.
 
 ```
 sudo apt-get update
-sudo apt-get install core-registry-API
+sudo apt-get install core-registry-api
 ```
 
 5.  Start Core Registry API with systemd

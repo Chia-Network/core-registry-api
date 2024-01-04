@@ -67,6 +67,11 @@ jobs:
         if: matrix.runs-on == 'windows-2019'
         run: choco install wget -y --no-progress
 
+      # Install jq on Linux if not already installed
+      - name: Install jq on Linux
+        if: matrix.os == 'linux'
+        run: command -v jq >/dev/null 2>&1 || { apt-get -y install jq }
+
       - name: Download executables and create apps.json file
         shell: bash
         env:

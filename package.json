@@ -26,8 +26,8 @@
   "scripts": {
     "start": "node index.js",
     "build": "pkg .",
-    "test": "concurrently \"npm run start\" \"wait-on $CORE_REGISTRY_HOST:31310  && wait-on $CORE_REGISTRY_HOST:31313 && wait-on $CORE_REGISTRY_HOST:31311 && jest\"",
-    "test-dev": "concurrently \"npm run start\" \"wait-on localhost:31310 && wait-on localhost:31313 && wait-on localhost:31311 && cross-env CORE_REGISTRY_HOST=localhost jest\"",
+    "test": "concurrently \"npm run start\" \"wait-on $CADT_HOST && wait-on $EXPLORER_HOST && wait-on $TOKENIZATION_ENGINE_HOST && jest\"",
+    "test-dev": "concurrently \"npm run start\" \"wait-on localhost:31310 && wait-on localhost:31313 && wait-on localhost:31311 && cross-env CADT_HOST=localhost && cross-env EXPLORER_HOST=localhost && cross-env TOKENIZATION_ENGINE_HOST=localhost && jest\"",
     "prepare-binary": "rm -rf dist && mkdir dist",
     "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node18-win-x64 --out-path dist",
     "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node18-macos-x64 --out-path dist",

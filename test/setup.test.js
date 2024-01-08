@@ -1,11 +1,15 @@
 const superagent = require("superagent");
 
-const { CORE_REGISTRY_HOST } = process.env;
+// Hosts should have the full path including port and any subdirectories
+const { CADT_HOST } = process.env
+const { EXPLORER_HOST } = process.env
+const { TOKENIZATION_ENGINE_HOST } = process.env
+
 
 describe("Uptime Tests", () => {
   it("CADT should pass", async () => {
     const response = await superagent.get(
-      `http://${CORE_REGISTRY_HOST}:31310/health`
+      `http://${CADT_HOST}/health`
     );
 
     expect(response.status).toBe(200);
@@ -13,7 +17,7 @@ describe("Uptime Tests", () => {
 
   it("Climate Explorer should pass", async () => {
     const response = await superagent.get(
-      `http://${CORE_REGISTRY_HOST}:31313/v1/activities`
+      `http://${EXPLORER_HOST}/v1/activities`
     );
 
     expect(response.status).toBe(200);
@@ -21,7 +25,7 @@ describe("Uptime Tests", () => {
 
   it("Climate Tokeninazation Engine should pass", async () => {
     const response = await superagent.get(
-      `http://${CORE_REGISTRY_HOST}:31311/healthz`
+      `http://${TOKENIZATION_ENGINE_HOST}/healthz`
     );
 
     expect(response.status).toBe(200);

@@ -1,0 +1,46 @@
+name: Integration Tests
+
+on:
+  workflow_dispatch:
+#   push:
+#     tags:
+#       - '**'
+#   pull_request:
+#     branches:
+#       - '**'
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clean workspace
+        uses: Chia-Network/actions/clean-workspace@main
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node 18.16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16'
+
+      - name: npm install
+        run: |
+          node --version
+          npm install
+
+      - name: npm run tests
+        env:
+          CADT_HOST: 'https://integration-testing.chiamanaged.com/coreregistrycadt01'
+          EXPLORER_HOST: 'https://integration-testing.chiamanaged.com/coreregistryexplorer01'
+          TOKENIZATION_ENGINE_HOST: 'https://integration-testing.chiamanaged.com/coreregistryengine01'
+        run: |
+          npm run test
+
+

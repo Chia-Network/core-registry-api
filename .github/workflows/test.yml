@@ -40,6 +40,7 @@ jobs:
           CADT_HOST: 'https://integration-testing.chiamanaged.com/coreregistrycadt01'
           EXPLORER_HOST: 'https://integration-testing.chiamanaged.com/coreregistryexplorer01'
           TOKENIZATION_ENGINE_HOST: 'https://integration-testing.chiamanaged.com/coreregistryengine01'
+          API_KEY: ${{ secrets.CADT_API_KEY }}
         run: |
           npm run test
 

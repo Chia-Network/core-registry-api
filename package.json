@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
-  "chiaTestedVersion": "2.1.4",
+  "chiaTestedVersion": "2.2.1",
   "chiaMinVersion": "2.1.0",
   "devDependencies": {
     "concurrently": "^8.2.2",

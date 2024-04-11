@@ -1,3 +1,12 @@
+## [1.0.35](https://github.com/Chia-Network/core-registry-api/compare/1.0.34...1.0.35) (2024-04-11)
+
+
+### Features
+
+* update cadt version ([d7925a3](https://github.com/Chia-Network/core-registry-api/commit/d7925a38a8a6cc09ef4c8173fb47252c0dcfc9c5))
+
+
+
 ## [1.0.34](https://github.com/Chia-Network/core-registry-api/compare/1.0.33...1.0.34) (2024-04-09)
 
 

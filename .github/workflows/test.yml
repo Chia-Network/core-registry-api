@@ -5,9 +5,9 @@ on:
 #   push:
 #     tags:
 #       - '**'
-#   pull_request:
-#     branches:
-#       - '**'
+  #  pull_request:
+  #    branches:
+  #      - '**'
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}
@@ -42,5 +42,3 @@ jobs:
           TOKENIZATION_ENGINE_HOST: 'https://integration-testing.chiamanaged.com/coreregistryengine01'
         run: |
           npm run test
-
-

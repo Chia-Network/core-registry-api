@@ -1,7 +1,7 @@
 {
   "core-registry-cadt": {
     "name": "cadt",
-    "version": "1.7.10",
+    "version": "1.7.11",
     "repo": "https://github.com/Chia-Network/Core-Registry-CADT/",
     "filename_format": "${APP}-${OS}-${ARCH}-${VERSION}.zip",
     "executable_format": "${APP}",

@@ -8,11 +8,11 @@
   "chiaTestedVersion": "2.3.1",
   "chiaMinVersion": "2.1.0",
   "devDependencies": {
+    "@yao-pkg/pkg": "^5.12.0",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.1.1",
     "jest": "^29.7.0",
-    "pkg": "^5.3.0",
     "tar": "^6.2.1",
     "wait-on": "^7.2.0",
     "yauzl": "^2.10.0"
@@ -24,16 +24,19 @@
     ],
     "outputPath": "dist"
   },
+  "engines": {
+    "node": ">=20.16"
+  },
   "scripts": {
     "start": "node index.js",
     "build": "pkg .",
     "test": "concurrently \"npm run start\" \"wait-on $CADT_HOST && wait-on $EXPLORER_HOST && wait-on $TOKENIZATION_ENGINE_HOST && jest\"",
     "test-dev": "concurrently \"npm run start\" \"wait-on localhost:31310 && wait-on localhost:31313 && wait-on localhost:31311 && cross-env CADT_HOST=localhost && cross-env EXPLORER_HOST=localhost && cross-env TOKENIZATION_ENGINE_HOST=localhost && jest\"",
     "prepare-binary": "rm -rf dist && mkdir dist",
-    "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node18-win-x64 --out-path dist",
-    "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node18-macos-x64 --out-path dist",
-    "create-linux-x64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-x64 --out-path dist",
-    "create-linux-arm64-dist": "npm run prepare-binary && pkg package.json -t node18-linux-arm64 --out-path dist"
+    "create-win-x64-dist": "npm run prepare-binary && pkg package.json -t node20-win-x64 --out-path dist",
+    "create-mac-x64-dist": "npm run prepare-binary && pkg package.json -t node20-macos-x64 --out-path dist",
+    "create-linux-x64-dist": "npm run prepare-binary && pkg package.json -t node20-linux-x64 --out-path dist",
+    "create-linux-arm64-dist": "npm run prepare-binary && pkg package.json -t node20-linux-arm64 --out-path dist"
   },
   "keywords": [
     "chia-blockchain"

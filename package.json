@@ -24,6 +24,9 @@
     ],
     "outputPath": "dist"
   },
+  "engines": {
+    "node": ">=20.16"
+  },
   "scripts": {
     "start": "node index.js",
     "build": "pkg .",

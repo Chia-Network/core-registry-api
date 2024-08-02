@@ -1,6 +1,6 @@
 {
-  "cadt": "cadt.exe",
-  "climate_explorer": "climate-explorer-chia_1.0.21_amd64.exe",
-  "climate_token_driver": "climate-token-driver_1.0.21_amd64.exe",
-  "climate_token_engine" : "climate-tokenization-engine.exe"
+  "cadt": "core-registry-cadt",
+  "climate_explorer": "climate-explorer-chia_1.0.39_x64",
+  "climate_token_driver": "climate-token-driver_1.0.39_x64",
+  "climate_token_engine" : "climate-tokenization-engine"
 }

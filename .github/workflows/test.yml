@@ -35,6 +35,11 @@ jobs:
           node --version
           npm install
 
+      - name: Install chia
+        run: |
+          apt update
+          apt install chia-blockchain-cli
+
       - name: npm run tests
         env:
           CADT_HOST: 'https://integration-testing.chiamanaged.com/coreregistrycadt01'

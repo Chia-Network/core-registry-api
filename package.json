@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
-  "chiaTestedVersion": "2.3.1",
+  "chiaTestedVersion": "2.4.2",
   "chiaMinVersion": "2.1.0",
   "devDependencies": {
     "@yao-pkg/pkg": "^5.12.0",

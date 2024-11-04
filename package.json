@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
-  "chiaTestedVersion": "2.4.2",
-  "chiaMinVersion": "2.1.0",
+  "chiaTestedVersion": "2.4.4",
+  "chiaMinVersion": "2.4.4",
   "devDependencies": {
     "@yao-pkg/pkg": "^5.12.0",
     "concurrently": "^8.2.2",

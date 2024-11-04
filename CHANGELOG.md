@@ -1,3 +1,13 @@
+## [1.0.38](https://github.com/Chia-Network/core-registry-api/compare/1.0.37...1.0.38) (2024-11-04)
+
+
+### Features
+
+* node v20 bump ([17232ee](https://github.com/Chia-Network/core-registry-api/commit/17232eedb2fb55ac396a20cadb106513a4e863eb))
+* node v20 bump ([95734de](https://github.com/Chia-Network/core-registry-api/commit/95734ded0ecaec8551f6906573b6f1426ab36440))
+
+
+
 ## [1.0.37](https://github.com/Chia-Network/core-registry-api/compare/1.0.36...1.0.37) (2024-07-28)
 
 

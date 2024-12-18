@@ -1,6 +1,6 @@
 {
   "name": "core-registry-api",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",
@@ -44,6 +44,6 @@
   "author": "Michael Taylor",
   "license": "Apache-2.0",
   "dependencies": {
-    "superagent": "^8.1.2"
+    "superagent": "^9.0"
   }
 }

@@ -44,6 +44,6 @@
   "author": "Michael Taylor",
   "license": "Apache-2.0",
   "dependencies": {
-    "superagent": "^8.1.2"
+    "superagent": "^9.0"
   }
 }

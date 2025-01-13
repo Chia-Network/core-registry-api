@@ -9,7 +9,7 @@
   },
   "climate-explorer-chia": {
     "name": "climate_explorer",
-    "version": "1.1.2-rc8",
+    "version": "1.1.2-rc9",
     "repo": "https://github.com/Chia-Network/climate-token-driver/",
     "filename_format": "${APP}_${OS}_${VERSION}_${ARCH}.zip",
     "executable_format": "${APP}_${VERSION}_${ARCH}"
@@ -24,7 +24,7 @@
   },
   "climate-tokenization-chia": {
     "name": "climate_token_driver",
-    "version": "1.1.2-rc8",
+    "version": "1.1.2-rc9",
     "repo": "https://github.com/Chia-Network/climate-token-driver/",
     "filename_format": "${APP}_${OS}_${VERSION}_${ARCH}.zip",
     "executable_format": "${APP}_${VERSION}_${ARCH}"

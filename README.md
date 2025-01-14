@@ -66,11 +66,31 @@ For `<USERNAME>`, enter the user that Chia runs as (the user with the `.chia` di
 sudo systemctl enable core-registry-api@<USERNAME>
 ```
 
-### Ports, Networking, and Security
+#### Pre-release Versions
+
+Experimental code is released with a "release candidate" naming convention and can be found on the [releases](/releases) page with `-rc` in the version number. Not all of the release candidates will be stable and caution should be used.  
+
+Release candidates can be installed via `apt` using the instructions (above)[#debian-based-linux-distros-ubuntu-mint-etc] except replace step 3 with the following:
+
+```
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/chia.gpg] https://repo.chia.net/climate-tokenization-test/debian/ stable main" | sudo tee /etc/apt/sources.list.d/climate-tokenization-test.list > /dev/null
+```
+
+If both the stable and release-candidate repos are added, `apt` can switch between versions installed using by appending `=<version-number>` to the install command:
+
+```
+apt install core-registry-api=1.0.39
+apt install core-registry-api=1.0.39-rc3
+apt install core-registry-api=1.0.1
+```
+
+Without specifying the version number, `apt` will install the latest release candidate if it exists, which might not always be desired. 
+
+## Ports, Networking, and Security
 
 To configure the services in the unified Core Registry API, please see the documentation of the individual applications listed at the top of this README.  
 
-### Contributing
+## Contributing
 
 All branches should be created from the `develop` branch and not from `main`.  All pull requests should be made against the `develop` branch, unless it is a new release.  The `develop` branch will be merged into the `main` branch to create a release.  Automation in the CI will create the [release](https://github.com/Chia-Network/core-registry-api/releases) and attach the installation files to it automatically whenever code is merged to `main`.  Additionally, the changelog will automatically be updated in the `main` branch.  Therefore, the `main` branch should always be a representation of the latest released code.  
 
@@ -99,7 +119,7 @@ The first part of this is the commit "type". The most common types are "feat" fo
   ​
   The "subject" of the commit follows. It should be a short indication of the change. The commit convention prefers that this is written in the present-imperative tense.
 
-### Versioning
+## Versioning
 
 This project mostly adheres to semantic versioning.  The version specified in `package.json` will be used by the ci to create the new release in Github so it is important to set that correctly.  The major version (version 1.0, 2.0, etc) should only be changed when the data model changes and the API goes from v1 to v2.  Minor version changes (version 1.2 to 1.3, etc) are for breaking or substantial changes, usually requiring some action on the user's part.
 

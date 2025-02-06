@@ -1,7 +1,7 @@
 {
   "core-registry-cadt": {
     "name": "cadt",
-    "version": "1.7.15-rc16",
+    "version": "1.7.15",
     "repo": "https://github.com/Chia-Network/Core-Registry-CADT/",
     "filename_format": "${APP}-${OS}-${ARCH}-${VERSION}.zip",
     "executable_format": "${APP}",
@@ -9,7 +9,7 @@
   },
   "climate-explorer-chia": {
     "name": "climate_explorer",
-    "version": "1.1.2-rc10",
+    "version": "1.1.2",
     "repo": "https://github.com/Chia-Network/climate-token-driver/",
     "filename_format": "${APP}_${OS}_${VERSION}_${ARCH}.zip",
     "executable_format": "${APP}_${VERSION}_${ARCH}"
@@ -24,7 +24,7 @@
   },
   "climate-tokenization-chia": {
     "name": "climate_token_driver",
-    "version": "1.1.2-rc10",
+    "version": "1.1.2",
     "repo": "https://github.com/Chia-Network/climate-token-driver/",
     "filename_format": "${APP}_${OS}_${VERSION}_${ARCH}.zip",
     "executable_format": "${APP}_${VERSION}_${ARCH}"

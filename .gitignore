@@ -108,3 +108,4 @@ apps
 build
 tmp.json
 newtmp.json
+/venv

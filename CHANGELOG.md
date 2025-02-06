@@ -1,3 +1,32 @@
+## [1.0.39](https://github.com/Chia-Network/core-registry-api/compare/1.0.39-rc11...1.0.39) (2025-02-06)
+
+
+
+## [1.0.38](https://github.com/Chia-Network/core-registry-api/compare/1.0.37...1.0.38) (2024-11-04)
+
+
+
+## [1.0.37](https://github.com/Chia-Network/core-registry-api/compare/1.0.36...1.0.37) (2024-07-28)
+
+
+
+## [1.0.36](https://github.com/Chia-Network/core-registry-api/compare/1.0.35...1.0.36) (2024-06-07)
+
+
+
+## [1.0.35](https://github.com/Chia-Network/core-registry-api/compare/1.0.34...1.0.35) (2024-04-11)
+
+
+
+## [1.0.34](https://github.com/Chia-Network/core-registry-api/compare/1.0.33...1.0.34) (2024-04-09)
+
+
+### Features
+
+* add apple ARM package target ([cb6156b](https://github.com/Chia-Network/core-registry-api/commit/cb6156b05cc236e6dcc45707e67eb75e1fc13075))
+
+
+
 ## [1.0.38](https://github.com/Chia-Network/core-registry-api/compare/1.0.37...1.0.38) (2024-11-04)
 
 

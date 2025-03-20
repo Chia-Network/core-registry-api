@@ -1,11 +1,11 @@
 {
   "name": "core-registry-api",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "Combined Carbon Core Registry API Application",
   "main": "index.js",
   "type": "commonjs",
   "bin": "index.js",
-  "chiaTestedVersion": "2.5.0",
+  "chiaTestedVersion": "2.5.2",
   "chiaMinVersion": "2.4.4",
   "devDependencies": {
     "@yao-pkg/pkg": "^5.16.1",

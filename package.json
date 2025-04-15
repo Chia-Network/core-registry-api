@@ -8,7 +8,7 @@
   "chiaTestedVersion": "2.5.3",
   "chiaMinVersion": "2.4.4",
   "devDependencies": {
-    "@yao-pkg/pkg": "^5.16.1",
+    "@yao-pkg/pkg": "^6.4.0",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.3.0",

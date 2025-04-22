@@ -1,4 +1,86 @@
-## [1.0.40](https://github.com/Chia-Network/core-registry-api/compare/1.0.39...1.0.40) (2025-03-20)
+## [1.0.41](https://github.com/Chia-Network/core-registry-api/compare/1.0.41-rc3...1.0.41) (2025-04-22)
+
+
+
+## [1.0.40](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc3...1.0.40) (2025-03-20)
+
+
+
+## [1.0.39](https://github.com/Chia-Network/core-registry-api/compare/1.0.39-rc11...1.0.39) (2025-02-06)
+
+
+
+## [1.0.38](https://github.com/Chia-Network/core-registry-api/compare/1.0.37...1.0.38) (2024-11-04)
+
+
+
+## [1.0.37](https://github.com/Chia-Network/core-registry-api/compare/1.0.36...1.0.37) (2024-07-28)
+
+
+
+## [1.0.36](https://github.com/Chia-Network/core-registry-api/compare/1.0.35...1.0.36) (2024-06-07)
+
+
+
+## [1.0.35](https://github.com/Chia-Network/core-registry-api/compare/1.0.34...1.0.35) (2024-04-11)
+
+
+
+## [1.0.34](https://github.com/Chia-Network/core-registry-api/compare/1.0.33...1.0.34) (2024-04-09)
+
+
+### Bug Fixes
+
+* support http and https on ip update script ([636770a](https://github.com/Chia-Network/core-registry-api/commit/636770a853624258721b34d4717bd695a7996074))
+
+
+### Features
+
+* add script to update datalayer URL and reset mirrors ([44152d4](https://github.com/Chia-Network/core-registry-api/commit/44152d4b60bcdb237fd077f827ed45dc8be284fd))
+
+
+
+## [1.0.40-rc3](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc2...1.0.40-rc3) (2025-03-20)
+
+
+
+## [1.0.40-rc2](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc1...1.0.40-rc2) (2025-03-20)
+
+
+
+## [1.0.40](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc3...1.0.40) (2025-03-20)
+
+
+
+## [1.0.39](https://github.com/Chia-Network/core-registry-api/compare/1.0.39-rc11...1.0.39) (2025-02-06)
+
+
+
+## [1.0.38](https://github.com/Chia-Network/core-registry-api/compare/1.0.37...1.0.38) (2024-11-04)
+
+
+
+## [1.0.37](https://github.com/Chia-Network/core-registry-api/compare/1.0.36...1.0.37) (2024-07-28)
+
+
+
+## [1.0.36](https://github.com/Chia-Network/core-registry-api/compare/1.0.35...1.0.36) (2024-06-07)
+
+
+
+## [1.0.35](https://github.com/Chia-Network/core-registry-api/compare/1.0.34...1.0.35) (2024-04-11)
+
+
+
+## [1.0.34](https://github.com/Chia-Network/core-registry-api/compare/1.0.33...1.0.34) (2024-04-09)
+
+
+
+## [1.0.40-rc3](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc2...1.0.40-rc3) (2025-03-20)
+
+
+
+## [1.0.40-rc2](https://github.com/Chia-Network/core-registry-api/compare/1.0.40-rc1...1.0.40-rc2) (2025-03-20)
 
 
 

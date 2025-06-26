@@ -146,3 +146,8 @@ The first part of this is the commit "type". The most common types are "feat" fo
 This project mostly adheres to semantic versioning.  The version specified in `package.json` will be used by the ci to create the new release in Github so it is important to set that correctly.  The major version (version 1.0, 2.0, etc) should only be changed when the data model changes and the API goes from v1 to v2.  Minor version changes (version 1.2 to 1.3, etc) are for breaking or substantial changes, usually requiring some action on the user's part.
 
 The version of Chia that Core Registry has been tested up to is controlled in package.json by the `chiaVersion` field, which automatically will build into a badge when the CI runs.
+
+## Attribution
+
+* [Document Object Model](https://www.w3.org/TR/DOM-Requirements/) by [W3C](https://www.w3.org/) licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+* [caniuselite](https://github.com/browserslist/caniuse-lite) by [Browserlist](https://browsersl.ist/) licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
